@@ -1,7 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
+import Form from "./components/Form";
+import Product from "./components/Product";
 
 export default function App() {
+  const [products, setProduct] = useState([
+    {
+      id: 1,
+      title: "hello",
+      price: "20",
+      taxes: "1",
+      ads: "1",
+      discount: "1",
+      total: "1",
+      count: "1",
+      category: "1",
+    },
+  ]);
+  const [formData, setFormData] = useState({
+    id: products.length,
+    title: "",
+    price: "",
+    taxes: "",
+    ads: "",
+    discount: "",
+    total: "",
+    count: "",
+    category: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+  const handleCreateProduct = () => {};
+  const handleDelete = () => {
+    console.log("deleted");
+  };
+  const handleEdit = () => {};
+
   return (
     <div className="grid lg:justify-center gap-4 p-4 lg:w-full lg:items-center lg:py-12 bg-[#262626] lg:text-center text-slate-50">
       <div className="grid lg:gap-0 gap-2">
@@ -10,52 +47,12 @@ export default function App() {
           product system managment
         </h2>
       </div>
-      <form className="lg:w-full grid gap-3 lg:shadow lg:p-6">
-        <input
-          type="text"
-          className="bg-black p-2 rounded"
-          placeholder="title"
-        />
-        <div className="lg:flex grid grid-cols-2 gap-2 gap-y-1 items-center">
-          <input
-            type="text"
-            className="bg-black p-2 rounded"
-            placeholder="price"
-          />
-          <input
-            type="text"
-            className="bg-black p-2 rounded"
-            placeholder="taxes"
-          />
-          <input
-            type="text"
-            className="bg-black p-2 rounded"
-            placeholder="ads"
-          />
-          <input
-            type="text"
-            className="bg-black p-2 rounded"
-            placeholder="discount"
-          />
-          <p className="text-orange-500">
-            Total : <span className="underlane font-semibold">$30</span>
-          </p>
-        </div>
-        <input
-          type="text"
-          className="bg-black p-2 rounded"
-          placeholder="count"
-        />
-        <input
-          type="text"
-          className="bg-black p-2 rounded"
-          placeholder="category"
-        />
-        <button className="bg-orange-700  p-2 hover:bg-opacity-90 text-white rounded text-center">
-          create
-        </button>
-      </form>
-      <div className="lg:bg-[#000000] rounded lg:p-12">
+      <Form
+        handleSubmit={handleSubmit}
+        formData={formData}
+        setFormData={setFormData}
+      />
+      <div className="lg:bg-[#000000] grid gap-4 rounded lg:p-12">
         <div className="lg:flex grid gap-2 justify-between items-center  border-b pb-4 border-gray-600">
           <h1 className="text-2xl font-semibold text-orange-500">Products</h1>
           <div>
@@ -74,6 +71,34 @@ export default function App() {
               </div>
             </form>
           </div>
+        </div>
+        <div>
+          <table cellPadding={6} align="center" width="100%">
+            <thead>
+              <tr className="uppercase text-gray-200">
+                <th>id</th>
+                <th>title</th>
+                <th>price</th>
+                <th>taxes</th>
+                <th>ads</th>
+                <th>discount</th>
+                <th>total</th>
+                <th>category</th>
+                <th>update</th>
+                <th>delete</th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-300">
+              {products.map((item, index) => {
+                <Product
+                  key={index}
+                  product={item}
+                  handleDelete={handleDelete}
+                  handleEdit={handleEdit}
+                />;
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
