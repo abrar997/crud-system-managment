@@ -59,18 +59,19 @@ export default function App() {
         <div className="lg:flex grid gap-2 justify-between items-center  border-b pb-4 border-gray-600">
           <h1 className="text-2xl font-semibold text-orange-500">Products</h1>
           <div>
-            <form className="flex gap-2 lg:gap-3 items-center">
+            <form className="lg:flex grid gap-3 lg:gap-3 items-center">
               <input
                 className="border bg-black border-gray-500 rounded p-2"
                 placeholder="search ..."
               />
-              <span>By :</span>
-              <button className="border border-yellow-800 hover:bg-gray-900 rounded text-white p-2">
-                title
-              </button>
-              <button className="border border-yellow-600 hover:bg-gray-900 rounded text-white p-2">
-                category
-              </button>
+              <div className="flex gap-3 items-center">
+                <button className="border border-yellow-800 hover:bg-gray-900 rounded text-white p-2">
+                  title
+                </button>
+                <button className="border border-yellow-600 hover:bg-gray-900 rounded text-white p-2">
+                  category
+                </button>
+              </div>
             </form>
           </div>
         </div>
