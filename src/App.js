@@ -24,7 +24,6 @@ export default function App() {
     taxes: "",
     ads: "",
     discount: "",
-    total: "",
     count: "",
     category: "",
   });
@@ -34,6 +33,7 @@ export default function App() {
     console.log(formData);
   };
   const handleCreateProduct = () => {};
+
   const handleDelete = () => {
     console.log("deleted");
   };
@@ -72,10 +72,10 @@ export default function App() {
             </form>
           </div>
         </div>
-        <div>
-          <table cellPadding={6} align="center" width="100%">
+        <div className="overflow-x-auto">
+          <table cellPadding={8} className="min-w-full">
             <thead>
-              <tr className="uppercase text-gray-200">
+              <tr className="lg:uppercase text-gray-200">
                 <th>id</th>
                 <th>title</th>
                 <th>price</th>
@@ -90,12 +90,14 @@ export default function App() {
             </thead>
             <tbody className="text-gray-300">
               {products.map((item, index) => {
-                <Product
-                  key={index}
-                  product={item}
-                  handleDelete={handleDelete}
-                  handleEdit={handleEdit}
-                />;
+                return (
+                  <Product
+                    key={index}
+                    product={item}
+                    handleDelete={handleDelete}
+                    handleEdit={handleEdit}
+                  />
+                );
               })}
             </tbody>
           </table>

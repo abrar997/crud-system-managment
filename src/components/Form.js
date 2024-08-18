@@ -48,9 +48,8 @@ const Form = ({ handleSubmit, formData, setFormData }) => {
             }
           />
           <p className="text-orange-500">
-            Total :{" "}
+            Total :
             <span className="underlane font-semibold">
-              $30{" "}
               {Number(formData.price) +
                 Number(formData.taxes) +
                 Number(formData.ads) +

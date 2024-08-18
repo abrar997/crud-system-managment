@@ -16,7 +16,13 @@ const Product = ({ handleDelete, handleEdit, product }) => {
       <td>{product.taxes}</td>
       <td>{product.ads}</td>
       <td>{product.discount}</td>
-      <td>{product.total}</td>
+      <td className="text-red-200">
+        $
+        {Number(product.price) +
+          Number(product.taxes) +
+          Number(product.ads) +
+          Number(product.discount)}
+      </td>
       <td>{product.category}</td>
       <td>
         <button
@@ -28,7 +34,7 @@ const Product = ({ handleDelete, handleEdit, product }) => {
       </td>
       <td>
         <button
-          onAuxClick={handleDelete}
+          onClick={handleDelete}
           className="bg-red-600 text-white rounded hover:bg-opacity-80 px-4"
         >
           delete
