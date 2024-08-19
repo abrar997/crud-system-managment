@@ -27,7 +27,7 @@ const Product = ({ handleDelete, handleEdit, product }) => {
       <td>
         <button
           onClick={handleEdit}
-          className="bg-rose-500 rounded text-white px-4 hover:bg-opacity-80"
+          className="bg-pink-800 rounded text-white px-4 hover:bg-opacity-80"
         >
           update
         </button>

@@ -40,9 +40,9 @@ export default function App() {
   const handleEdit = () => {};
 
   return (
-    <div className="grid lg:justify-center gap-4 p-4 lg:w-full lg:items-center lg:py-12 bg-[#262626] lg:text-center text-slate-50">
+    <div className="grid lg:justify-center gap-0 p-4 lg:w-full lg:items-center lg:py-12 bg-[#262626] lg:text-center text-slate-50">
       <div className="grid lg:gap-0 gap-2">
-        <h1 className="font-bold uppercase text-3xl text-orange-600">Cruds</h1>
+        <h1 className="font-bold uppercase text-3xl text-teal-500">Cruds</h1>
         <h2 className="font-semibold uppercase text-gray-200">
           product system managment
         </h2>
@@ -52,9 +52,9 @@ export default function App() {
         formData={formData}
         setFormData={setFormData}
       />
-      <div className="lg:bg-[#000000] grid gap-4 rounded lg:p-12">
+      <div className="lg:bg-[#000000] grid gap-4 rounded lg:p-12 m-6 mx-2">
         <div className="lg:flex grid gap-2 justify-between items-center  border-b pb-4 border-gray-600">
-          <h1 className="text-2xl font-semibold text-orange-500">Products</h1>
+          <h1 className="text-2xl font-semibold text-teal-500">Products</h1>
           <div>
             <form className="lg:flex grid gap-3 lg:gap-3 items-center">
               <input
@@ -62,10 +62,10 @@ export default function App() {
                 placeholder="search ..."
               />
               <div className="flex gap-3 items-center">
-                <button className="border border-yellow-800 hover:bg-gray-900 rounded text-white p-2">
+                <button className="border border-pink-800 hover:bg-gray-900 rounded text-white p-2">
                   title
                 </button>
-                <button className="border border-yellow-600 hover:bg-gray-900 rounded text-white p-2">
+                <button className="border border-teal-600 hover:bg-gray-900 rounded text-white p-2">
                   category
                 </button>
               </div>

@@ -47,7 +47,7 @@ const Form = ({ handleSubmit, formData, setFormData }) => {
               setFormData({ ...formData, discount: e.target.value })
             }
           />
-          <p className="text-orange-500">
+          <p className="text-teal-500">
             Total :
             <span className="underlane font-semibold">
               {Number(formData.price) +
@@ -73,7 +73,7 @@ const Form = ({ handleSubmit, formData, setFormData }) => {
             setFormData({ ...formData, category: e.target.value })
           }
         />
-        <button className="bg-orange-700  p-2 hover:bg-opacity-90 text-white rounded text-center">
+        <button className="bg-teal-700  p-2 hover:bg-opacity-90 text-white rounded text-center">
           create
         </button>
       </form>
