@@ -18,6 +18,8 @@ export default function App() {
     category: "",
     total: "",
   });
+  const [selcetdItem, setSelectedItem] = useState(null);
+
   // /load products from localStorage when components mounts
   useEffect(() => {
     const savedData = JSON.parse(localStorage.getItem("data"));
@@ -28,10 +30,13 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(products));
   }, [products, formData]);
-
   const handleCreateProduct = () => {
     const newProduct = {
-      id: products.length ? Math.max(...products.map((p) => p.id)) + 1 : 1,
+      id: selcetdItem
+        ? selcetdItem.id
+        : products.length
+        ? Math.max(...products.map((p) => p.id)) + 1
+        : 1,
       title: formData.title,
       price: formData.price,
       taxes: formData.taxes,
@@ -45,7 +50,15 @@ export default function App() {
         Number(formData.ads) +
         Number(formData.discount),
     };
-    setProduct([...products, newProduct]);
+    if (selcetdItem) {
+      const updatedItem = products.map((product) =>
+        product.id === selcetdItem.id ? newProduct : product
+      );
+      setProduct(updatedItem);
+      setSelectedItem(null);
+    } else {
+      setProduct([...products, newProduct]);
+    }
     setFormData({
       id: products.length ? Math.max(...products.map((p) => p.id)) + 1 : 1,
       title: "",
@@ -63,6 +76,7 @@ export default function App() {
     const itemDeleted = products.filter((item) => item.id !== id);
     setProduct(itemDeleted);
   };
+
   const handleEdit = (id) => {
     const itemToEdit = products.find((i) => i.id === id);
     if (itemToEdit) {
@@ -76,6 +90,7 @@ export default function App() {
         count: itemToEdit.count,
         category: itemToEdit.category,
       });
+      setSelectedItem(itemToEdit);
     }
   };
 
@@ -85,8 +100,8 @@ export default function App() {
   };
 
   return (
-    <div className="grid  lg:justify-center gap-0 p-4 lg:w-full lg:items-center lg:py-12 bg-[#262626] lg:text-center text-slate-50">
-      <div className="grid lg:gap-0 gap-2">
+    <div className="grid lg:justify-center py-8 gap-6 px-4 lg:w-full lg:items-center lg:py-12 lg:text-center text-slate-50">
+      <div className="grid lg:gap-0 gap-1">
         <h1 className="font-bold uppercase text-3xl text-teal-500">Cruds</h1>
         <h2 className="font-semibold uppercase text-gray-200">
           product system managment
@@ -96,15 +111,15 @@ export default function App() {
         handleSubmit={handleSubmit}
         formData={formData}
         setFormData={setFormData}
-        // isDisabled={
-        //   !formData.title ||
-        //   !formData.price ||
-        //   !formData.taxes ||
-        //   !formData.ads ||
-        //   !formData.discount ||
-        //   !formData.category ||
-        //   !formData.count
-        // }
+        isDisabled={
+          !formData.title ||
+          !formData.price ||
+          !formData.taxes ||
+          !formData.ads ||
+          !formData.discount ||
+          !formData.category ||
+          !formData.count
+        }
       />
       <div className="lg:bg-[#000000] grid gap-4 rounded lg:p-12 m-6 mx-2">
         <div className="lg:flex grid gap-2 justify-between items-center  border-b pb-4 border-gray-600">
@@ -143,16 +158,24 @@ export default function App() {
               </tr>
             </thead>
             <tbody className="text-gray-300">
-              {products.map((item, index) => {
-                return (
-                  <Product
-                    key={index}
-                    product={item}
-                    handleDelete={handleDelete}
-                    handleEdit={handleEdit}
-                  />
-                );
-              })}
+              {products.length === 0 ? (
+                <tr>
+                  <td className="text-gray-500 text-center" colSpan="10">
+                    No products available
+                  </td>
+                </tr>
+              ) : (
+                products.map((item, index) => {
+                  return (
+                    <Product
+                      key={index}
+                      product={item}
+                      handleDelete={handleDelete}
+                      handleEdit={handleEdit}
+                    />
+                  );
+                })
+              )}
             </tbody>
           </table>
         </div>

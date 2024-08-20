@@ -11,6 +11,7 @@ const Form = ({ handleSubmit, formData, setFormData, isDisabled }) => {
           placeholder="title"
           value={formData.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+          required
         />
         <div className="lg:flex grid grid-cols-2 gap-2 gap-y-1 items-center">
           <input
@@ -21,6 +22,7 @@ const Form = ({ handleSubmit, formData, setFormData, isDisabled }) => {
             onChange={(e) =>
               setFormData({ ...formData, price: e.target.value })
             }
+            required
           />
           <input
             type="text"
@@ -30,6 +32,7 @@ const Form = ({ handleSubmit, formData, setFormData, isDisabled }) => {
             onChange={(e) =>
               setFormData({ ...formData, taxes: e.target.value })
             }
+            required
           />
           <input
             type="text"
@@ -37,6 +40,7 @@ const Form = ({ handleSubmit, formData, setFormData, isDisabled }) => {
             placeholder="ads"
             value={formData.ads}
             onChange={(e) => setFormData({ ...formData, ads: e.target.value })}
+            required
           />
           <input
             type="text"
@@ -46,6 +50,7 @@ const Form = ({ handleSubmit, formData, setFormData, isDisabled }) => {
             onChange={(e) =>
               setFormData({ ...formData, discount: e.target.value })
             }
+            required
           />
         </div>
         <p className="text-teal-500 text-left">
@@ -63,6 +68,7 @@ const Form = ({ handleSubmit, formData, setFormData, isDisabled }) => {
           placeholder="count"
           value={formData.count}
           onChange={(e) => setFormData({ ...formData, count: e.target.value })}
+          required
         />
         <input
           type="text"
@@ -72,10 +78,13 @@ const Form = ({ handleSubmit, formData, setFormData, isDisabled }) => {
           onChange={(e) =>
             setFormData({ ...formData, category: e.target.value })
           }
+          required
         />
         <button
-          className={`bg-teal-700  p-2 hover:bg-opacity-90 text-white rounded text-center ${
-            isDisabled && " cursor-not-allowed bg-teal-900 hover:bg-opacity-100"
+          className={`p-2 text-white rounded text-center ${
+            isDisabled
+              ? " cursor-not-allowed bg-[#4848482a] hover:bg-opacity-100"
+              : "hover:bg-opacity-90 bg-teal-700 "
           }`}
         >
           create
