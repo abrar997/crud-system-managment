@@ -1,15 +1,6 @@
 const Product = ({ handleDelete, handleEdit, product }) => {
   return (
     <tr>
-      {/* <td>1</td>
-      <td>Smart</td>
-      <td>2000</td>
-      <td>100</td>
-      <td>100</td>
-      <td>100</td>
-      <td>2100</td>
-      <td>phone</td>
-      <td>1</td> */}
       <td>{product.id}</td>
       <td>{product.title}</td>
       <td>{product.price}</td>
@@ -26,7 +17,7 @@ const Product = ({ handleDelete, handleEdit, product }) => {
       <td>{product.category}</td>
       <td>
         <button
-          onClick={handleEdit}
+          onClick={() => handleEdit(product.id)}
           className="bg-pink-800 rounded text-white px-4 hover:bg-opacity-80"
         >
           update
@@ -34,7 +25,7 @@ const Product = ({ handleDelete, handleEdit, product }) => {
       </td>
       <td>
         <button
-          onClick={handleDelete}
+          onClick={() => handleDelete(product.id)}
           className="bg-red-600 text-white rounded hover:bg-opacity-80 px-4"
         >
           delete
