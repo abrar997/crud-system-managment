@@ -5,7 +5,7 @@ import Product from "./components/Product";
 
 export default function App() {
   const [products, setProducts] = useState(
-    JSON.parse(localStorage.getItem("data") || [])
+    JSON.parse(localStorage.getItem("data") || "[]")
   );
   const [formData, setFormData] = useState({
     id: 1,
