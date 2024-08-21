@@ -5,7 +5,7 @@ import Product from "./components/Product";
 
 export default function App() {
   const [products, setProducts] = useState(
-    JSON.parse(localStorage.getItem("data") || "[]")
+    JSON.parse(localStorage.getItem("data") || [])
   );
   const [formData, setFormData] = useState({
     id: 1,
@@ -19,6 +19,7 @@ export default function App() {
   });
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchInput, setSearchInput] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,9 +51,11 @@ export default function App() {
         product.id === selectedItem.id ? newProduct : product
       );
       setProducts(updatedItem);
+      setFilteredProducts(updatedItem);
       setSelectedItem(null);
     } else {
       setProducts([...products, newProduct]);
+      setFilteredProducts([...products, newProduct]);
     }
 
     setFormData({
@@ -93,16 +96,18 @@ export default function App() {
   const handleDelete = (id) => {
     const selectedProduct = products.filter((product) => product.id !== id);
     setProducts(selectedProduct);
+    setFilteredProducts(selectedProduct);
   };
 
-  const findProduct = (searchedValue) => {
-    setSearchInput(searchedValue);
-    products.filter((item) => {
-      return Object.values(item)
-        .join("")
-        .toLowerCase()
-        .includes(searchInput.toLowerCase());
+  const searchProduct = () => {
+    const lowerCaseInput = searchInput.toLowerCase();
+    const filtered = products.filter((item) => {
+      return (
+        item.title.toLowerCase().includes(lowerCaseInput) ||
+        item.category.toLowerCase().includes(lowerCaseInput)
+      );
     });
+    setFilteredProducts(filtered);
   };
 
   useEffect(() => {
@@ -110,12 +115,19 @@ export default function App() {
     //taked as object
     const savedDate = JSON.parse(localStorage.getItem("data"));
     setProducts(savedDate);
+    setFilteredProducts(savedDate);
   }, []);
 
   useEffect(() => {
     //saved as json
     localStorage.setItem("data", JSON.stringify(products));
   }, [products, formData]);
+
+  useEffect(() => {
+    if (!searchInput) {
+      setFilteredProducts(products);
+    }
+  }, [products, searchInput]);
 
   return (
     <div className="grid lg:justify-center py-8 gap-2 px-4 lg:w-full lg:items-center lg:py-10 lg:text-center text-slate-50">
@@ -143,17 +155,25 @@ export default function App() {
         <div className="lg:flex grid gap-2 justify-between items-center  border-b pb-4 border-gray-600">
           <h1 className="text-2xl font-semibold text-teal-500">Products</h1>
           <div>
-            <form className="lg:flex grid gap-3 lg:gap-3 items-center">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                searchProduct();
+              }}
+              className="flex gap-3 lg:gap-3 w-full items-center"
+            >
               <input
-                className="border bg-black border-gray-500 rounded p-2"
+                className="border bg-black w-full border-gray-500 rounded p-2"
                 placeholder="search ..."
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
               />
               <div className="flex gap-3 items-center">
-                <button className="border border-pink-800 hover:bg-gray-900 rounded text-white p-2">
-                  title
-                </button>
-                <button className="border border-teal-600 hover:bg-gray-900 rounded text-white p-2">
-                  category
+                <button
+                  onClick={searchProduct}
+                  className="bg-pink-800 rounded text-white p-2"
+                >
+                  search
                 </button>
               </div>
             </form>
@@ -176,14 +196,14 @@ export default function App() {
               </tr>
             </thead>
             <tbody className="text-gray-300">
-              {products.length === 0 ? (
+              {filteredProducts.length === 0 ? (
                 <tr>
-                  <td className="text-gray-500 text-center" colSpan="10">
+                  <td className="text-gray-500 lg:text-center" colSpan="10">
                     No products available
                   </td>
                 </tr>
               ) : (
-                products.map((item, index) => {
+                filteredProducts.map((item, index) => {
                   return (
                     <Product
                       key={index}
