@@ -18,6 +18,7 @@ export default function App() {
     total: "",
   });
   const [selectedItem, setSelectedItem] = useState(null);
+  const [searchInput, setSearchInput] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -92,6 +93,16 @@ export default function App() {
   const handleDelete = (id) => {
     const selectedProduct = products.filter((product) => product.id !== id);
     setProducts(selectedProduct);
+  };
+
+  const findProduct = (searchedValue) => {
+    setSearchInput(searchedValue);
+    products.filter((item) => {
+      return Object.values(item)
+        .join("")
+        .toLowerCase()
+        .includes(searchInput.toLowerCase());
+    });
   };
 
   useEffect(() => {
