@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Form from "./components/Form";
 import Product from "./components/Product";
+import { FaSearch } from "react-icons/fa";
+import { BiSearch } from "react-icons/bi";
 
 export default function App() {
   const [products, setProducts] = useState(
@@ -99,6 +101,19 @@ export default function App() {
     setFilteredProducts(selectedProduct);
   };
 
+  const hadnldeDuplicate = (id) => {
+    const duplicatedItem = products.find((item) => item.id === id);
+    if (duplicatedItem) {
+      const newProductDuplicated = {
+        ...duplicatedItem,
+        id: products.length ? Math.max(...products.map((p) => p.id)) + 1 : 1,
+      };
+      const updatedProducts = [...products, newProductDuplicated];
+      setProducts(updatedProducts);
+      setFilteredProducts(updatedProducts);
+    }
+  };
+
   const searchProduct = () => {
     const lowerCaseInput = searchInput.toLowerCase();
     const filtered = products.filter((item) => {
@@ -114,8 +129,13 @@ export default function App() {
     //json to object
     //taked as object
     const savedDate = JSON.parse(localStorage.getItem("data"));
-    setProducts(savedDate);
-    setFilteredProducts(savedDate);
+    if (Array.isArray(savedDate)) {
+      setProducts(savedDate);
+      setFilteredProducts(savedDate);
+    } else {
+      setFilteredProducts([]);
+      setProducts([]);
+    }
   }, []);
 
   useEffect(() => {
@@ -129,8 +149,12 @@ export default function App() {
     }
   }, [products, searchInput]);
 
+  useEffect(() => {
+    searchProduct();
+  }, [searchInput]);
+
   return (
-    <div className="grid lg:justify-center py-8 gap-2 px-4 lg:w-full lg:items-center lg:py-10 lg:text-center text-slate-50">
+    <div className="grid lg:justify-center py-8 gap-6 lg:gap-2 px-4 lg:w-full lg:items-center lg:py-10 lg:text-center text-slate-50">
       <div className="grid lg:gap-0 gap-1">
         <h1 className="font-bold uppercase text-3xl text-teal-500">Cruds</h1>
         <h2 className="font-semibold uppercase text-gray-200">
@@ -151,36 +175,29 @@ export default function App() {
           !formData.count
         }
       />
-      <div className="lg:bg-[#000000] grid gap-4 rounded lg:p-12 m-6 mx-2">
+      <div className="lg:bg-[#000000] grid gap-4 rounded lg:p-6">
         <div className="lg:flex grid gap-2 justify-between items-center  border-b pb-4 border-gray-600">
           <h1 className="text-2xl font-semibold text-teal-500">Products</h1>
-          <div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                searchProduct();
-              }}
-              className="flex gap-3 lg:gap-3 w-full items-center"
-            >
-              <input
-                className="border bg-black w-full border-gray-500 rounded p-2"
-                placeholder="search ..."
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-              />
-              <div className="flex gap-3 items-center">
-                <button
-                  onClick={searchProduct}
-                  className="bg-pink-800 rounded text-white p-2"
-                >
-                  search
-                </button>
-              </div>
-            </form>
-          </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              searchProduct();
+            }}
+            className="flex gap-2 lg:gap-3 items-center relative"
+          >
+            <input
+              className="border bg-black w-full relative border-gray-500 rounded p-2"
+              placeholder="search ..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            <span className="absolute right-3">
+              <BiSearch />
+            </span>
+          </form>
         </div>
         <div className="overflow-x-auto">
-          <table cellPadding={8} className="min-w-full">
+          <table cellPadding={9} className="min-w-full">
             <thead>
               <tr className="lg:uppercase text-gray-200">
                 <th>id</th>
@@ -191,18 +208,19 @@ export default function App() {
                 <th>discount</th>
                 <th>total</th>
                 <th>category</th>
-                <th>update</th>
-                <th>delete</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody className="text-gray-300">
-              {filteredProducts.length === 0 ? (
+              {Array.isArray(filteredProducts) &&
+              filteredProducts.length === 0 ? (
                 <tr>
                   <td className="text-gray-500 lg:text-center" colSpan="10">
                     No products available
                   </td>
                 </tr>
               ) : (
+                Array.isArray(filteredProducts) &&
                 filteredProducts.map((item, index) => {
                   return (
                     <Product
@@ -210,6 +228,7 @@ export default function App() {
                       product={item}
                       handleDelete={handleDelete}
                       handleEdit={handleEdit}
+                      hadnldeDuplicate={hadnldeDuplicate}
                     />
                   );
                 })

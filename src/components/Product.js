@@ -1,4 +1,6 @@
-const Product = ({ handleDelete, handleEdit, product }) => {
+import { BiDuplicate, BiSolidEdit, BiTrash } from "react-icons/bi";
+
+const Product = ({ handleDelete, handleEdit, product, hadnldeDuplicate }) => {
   return (
     <tr>
       <td>{product.id}</td>
@@ -15,20 +17,24 @@ const Product = ({ handleDelete, handleEdit, product }) => {
           Number(product.discount)}
       </td>
       <td>{product.category}</td>
-      <td>
+      <td className="flex gap-2 items-center lg:ml-6">
         <button
           onClick={() => handleEdit(product.id)}
-          className="bg-pink-800 rounded text-white px-4 hover:bg-opacity-80"
+          className="border border-pink-400 rounded text-white p-1 lg:p-2 hover:text-pink-200"
         >
-          update
+          <BiSolidEdit />
         </button>
-      </td>
-      <td>
+        <button
+          onClick={() => hadnldeDuplicate(product.id)}
+          className="border border-teal-600 rounded text-white p-1 lg:p-2 hover:text-teal-200"
+        >
+          <BiDuplicate />
+        </button>
         <button
           onClick={() => handleDelete(product.id)}
-          className="bg-red-600 text-white rounded hover:bg-opacity-80 px-4"
+          className="border border-red-600 rounded text-white p-1 lg:p-2 hover:text-red-200"
         >
-          delete
+          <BiTrash />
         </button>
       </td>
     </tr>

@@ -56,10 +56,15 @@ const Form = ({ handleSubmit, formData, setFormData, isDisabled }) => {
         <p className="text-teal-500 text-left">
           Total :
           <span className="underlane font-semibold">
-            {Number(formData.price) +
-              Number(formData.taxes) +
-              Number(formData.ads) +
-              Number(formData.discount)}
+            {formData.price ||
+            formData.taxes ||
+            formData.ads ||
+            formData.discount
+              ? Number(formData.price) +
+                Number(formData.taxes) +
+                Number(formData.ads) +
+                Number(formData.discount)
+              : 0}
           </span>
         </p>
         <input
