@@ -6,9 +6,10 @@ import { FaSearch } from "react-icons/fa";
 import { BiSearch } from "react-icons/bi";
 
 export default function App() {
-  const [products, setProducts] = useState(
-    JSON.parse(localStorage.getItem("data") || [])
-  );
+  const [products, setProducts] = useState(() => {
+    const savedData = localStorage.getItem("data");
+    return savedData ? JSON.parse(savedData) : [];
+  });
   const [formData, setFormData] = useState({
     id: 1,
     title: "",
