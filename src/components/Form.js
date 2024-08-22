@@ -1,10 +1,7 @@
 const Form = ({ handleSubmit, formData, setFormData, isDisabled }) => {
   return (
     <div>
-      <form
-        className="lg:w-full grid gap-3 lg:shadow-lg lg:p-6"
-        onSubmit={handleSubmit}
-      >
+      <form className="lg:w-full grid gap-3" onSubmit={handleSubmit}>
         <input
           type="text"
           className="bg-black p-2 rounded"

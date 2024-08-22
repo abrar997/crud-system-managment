@@ -154,7 +154,7 @@ export default function App() {
   }, [searchInput]);
 
   return (
-    <div className="grid lg:justify-center py-8 gap-6 lg:gap-2 px-4 lg:w-full lg:items-center lg:py-10 lg:text-center text-slate-50">
+    <div className="grid lg:justify-center py-8 gap-6 lg:gap-8 px-4 lg:w-full lg:items-center lg:py-10 lg:text-center text-slate-50">
       <div className="grid lg:gap-0 gap-1">
         <h1 className="font-bold uppercase text-3xl text-teal-500">Cruds</h1>
         <h2 className="font-semibold uppercase text-gray-200">
